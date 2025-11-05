@@ -1,11 +1,13 @@
-const VALID_CATEGORIES = ["Technology", "Health", "Travel"];
+const Joi = require("joi");
 
-function validatePost({ title, content, category }) {
-//   if (!title || !content || !category)
-//     return "Title, content, and category are required.";
-  if (!VALID_CATEGORIES.includes(category))
-    return `Invalid category. Must be one of ${VALID_CATEGORIES.join(", ")}.`;
-  return null;
+const createPostSchema = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+});
+
+function createPostValidate(data) {
+  const { error } = createPostSchema.validate(data);
+  return error ? error.details[0].message : null;
 }
 
-module.exports = { validatePost, VALID_CATEGORIES };
+module.exports = { createPostValidate };

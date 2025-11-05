@@ -3,7 +3,7 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "your_jwt_secret";
 
-exports.registerUser = async (name, email, password) => {
+exports.registerUser = async ({name, email, password}) => {
   let user = await User.findOne({ email });
   if (user) return { error: "User already registered." };
 
